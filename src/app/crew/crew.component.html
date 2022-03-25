@@ -1,6 +1,22 @@
 <h3>Crew</h3>
 <ul>
-  <li>Jessica Watkins</li>
-  <li>Raja Chari</li>
-  <li>Jasmin Moghbeli</li>
+    <li *ngFor="let crewMem of crew">
+      <span *ngIf="memberBeingEdited !== crewMem; else elseBlock">
+      <span (click)="edit(crewMem)" class="editable-text">{{crewMem.name}}</span>
+      <span *ngIf="crewMem.firstMission">- 1st</span>
+      
+        <button (click)="removeMember(crewMem)">remove</button>
+      </span>
+      <ng-template #elseBlock>
+        <input #updatedName (keyup.enter)="save(updatedName.value, crewMem)" value="{{crewMem.name}}"/>
+        <button (click)="save(updatedName.value, crewMem)">save</button>
+      </ng-template>
+  </li>
 </ul>
+<div>
+  <form>
+    <input type="text" #newCrewMems [id]="newCrewMem" [placeholder]="newCrewMem" />
+    <label>First Mission<input #firstMissionCheck type="checkbox" /></label>
+    <button (click)="addCrew(newCrewMems.value, firstMissionCheck.checked)">Add</button>
+  </form>
+</div>
