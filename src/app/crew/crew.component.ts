@@ -24,12 +24,21 @@ export class CrewComponent implements OnInit {
 
   ngOnInit() { }
 
-  addCrewMember(candidate){
-    if(!this.crew.includes(candidate) && this.crew.length<3){
-      this.crew.push(candidate);
+  addCrewMember(candidate:object){
+    if(!this.crew.includes(candidate) ){
+      this.inCrew=true;
+    }else{
+      this.inCrew=false;
     }
-    if(this.crew.includes(candidate)){
-      this.crew.splice(this.crew.indexOf(candidate),1);
+
+    if(this.inCrew){
+      let index=this.crew.indexOf(candidate);
+      this.crew.splice(index,1);
+    }else if(
+      !this.inCrew && this.crew.length<3
+    ){
+      this.crew.push(candidate);
+     
     }
   }
 
